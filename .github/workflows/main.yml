@@ -1,21 +1,16 @@
-- name: Clean workflow runs
-  # You may pin to the exact commit or the version.
-  # uses: dmvict/clean-workflow-runs@c3aa04e9e161c8bec4458966db57bc8a1de4c6bd
-  uses: dmvict/clean-workflow-runs@v1.2.1
-  with:
-    # A personal access token.
-    token: # optional, default is ${{ github.token }}
-    # A repository from which delete workflow runs. Default is the current repository.
-    repo: # optional, default is ${{ github.repository }}
-    # A filename of workflow or its id. By default, the action grabs all workflows.
-    workflow_id: # optional
-    # A branch from which delete workflow runs. By default, the action grabs all branches.
-    branch: # optional
-    # Filter for workflow runs conclusion. Accepts all available conclusions.
-    run_conclusions: # optional
-    # Determines period during which the workflow runs will be saved.
-    save_period: # optional, default is 90
-    # A minimal number of completed runs which will be saved.
-    save_min_runs_number: # optional, default is 10
-    # Enables dry run of action. Action will print the list of workflow runs to delete.
-    dry: # optional
+name: GitHub Actions cleanup
+run-name: cleanup
+on: [push]
+jobs:
+  delete_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: dmvict/clean-workflow-runs@v1.2.1
+        with:
+          token: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+          run_conclusions: |
+            cancelled
+            skipped
+          save_period: '06:00:00'
+          save_min_runs_number: 0
