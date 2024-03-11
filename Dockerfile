@@ -1,11 +1,11 @@
 FROM caddy:builder-alpine AS builder-alpine
 
+#--with github.com/lucaslorentz/caddy-docker-proxy/v2 \
 RUN xcaddy build \
-    --with github.com/lucaslorentz/caddy-docker-proxy/v2 \
-    --with github.com/greenpau/caddy-security \
-    --with github.com/caddy-dns/cloudflare \
-    --with github.com/caddy-dns/rfc2136 \
-    --with github.com/caddyserver/caddy/v2
+  --with github.com/greenpau/caddy-security \
+  --with github.com/caddy-dns/cloudflare \
+  --with github.com/caddy-dns/rfc2136 \
+  --with github.com/caddyserver/caddy/v2
 
 FROM caddy:alpine
 
